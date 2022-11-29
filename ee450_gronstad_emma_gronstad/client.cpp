@@ -19,7 +19,7 @@ client.c
 #include <errno.h> 
 #include <sys/wait.h>
 
-#define port "25267"
+#define port 	25267
 #define BUFSIZE 1024
 
 using namespace std;
@@ -39,13 +39,14 @@ string login(){
 
 string course_code;
 string category;
+string course_query;
 
 string query(){
 	cout<<"Please enter the course code to query: ";
 	getline(cin, course_code);
 	cout<<"Please enter the category (Credit/Professor/Days/CourseName): ";
 	getline(cin, category);
-	course_query=course+","+category;
+	course_query=course_code+","+category;
 	return course_query;
 }
 
@@ -69,7 +70,7 @@ void client_TCP(){
         exit(1);
     }
     bzero((char*)&my_addr, sizeof(my_addr));
-    getsock_check=getsockname(client_TCP_sock, (struct sockaddr*) &my_addr, (socklen_t*)&sizeof(my_addr));
+  	getsockname(client_TCP_sock, (struct sockaddr*) &my_addr, (socklen_t*)&sizeof(my_addr));
     clientPort = ntohs(my_addr.sin_port);
     exit(0);
 }
