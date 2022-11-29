@@ -202,7 +202,7 @@ int main(){
 
 	//encrypt information
 	dont_steal_my_info(msg);
-	send_to_c = crypt_info;
+	strcpy(send_to_c, crypt_info.c_str());
 	
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
@@ -218,7 +218,7 @@ int main(){
 	cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
 	
 	//PHASE 2B
-	send_to_client=event;
+	strcpy(send_to_client, event.c_str());
 	//send result of the authentication request to the client over a TCP connection
 	//4. GOTO: client.c with string event and/or corresponding integer
 	send(server_TCP_sock,(char*)send_to_client,strlen(send_to_client),0);
@@ -246,7 +246,7 @@ int main(){
     if (course_code.substr(0,2)=="CS"){
     	department="CS";
         dept_flag=0;
-    }else if (course_code.subtr(0,2)=="EE"){
+    }else if (course_code.substr(0,2)=="EE"){
    		department="EE";
         dept_flag=1;
     }
@@ -272,6 +272,7 @@ int main(){
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
+		unsigned int ee_len= sizeof(server_ee_addr);
 		sendto(main_UDP_sock, (const char *)send_to_ee, strlen(send_to_ee), MSG_CONFIRM, (const struct sockaddr *) &server_ee_addr, ee_len);
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
