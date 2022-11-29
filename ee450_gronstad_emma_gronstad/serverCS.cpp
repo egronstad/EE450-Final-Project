@@ -116,11 +116,14 @@ void query_split(string query){
     }
 }
 
+int main_buf_len;
 
 int main(){
 	//PHASE 3B
 	//after getting the query information, look through stored local information to obtain the corresponding course information.
-	char query = recvfrom(cs_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (const struct sockaddr *) &main_addr, &sizeof(main_addr)); 
+	unsigned int len= sizeof(main_addr);
+	main_buf_len = recvfrom(cs_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (const struct sockaddr *) &main_addr, &len); 
+	string query = main_buf;
 	//After receiving the request from main server:
 	cout<<"The ServerCS received a request from the Main Server about the "<<category<<" of "<<course_code<<".";
 	extract_dept_file();
@@ -142,7 +145,7 @@ int main(){
 	send_to_main = course_info;
 	//query information is sent back to the Main server using UDP
 	//7. GOTO: serverM.c with course_info
-	sendto(cs_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (struct sockaddr *) &main_addr,  sizeof(main_addr));
+	sendto(cs_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (struct sockaddr *) &main_addr, len);
 	//After sending the results to the main server: 
 	cout<<"The ServerCS finished sending the response to the Main Server.";
 	return 0;
