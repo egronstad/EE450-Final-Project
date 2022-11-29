@@ -168,10 +168,17 @@ string find_code(string query){
 
 int dept_request;
 string department;
+/*
 const char *send_to_c[BUFSIZE];
 const char *send_to_cs[BUFSIZE];
 const char *send_to_ee[BUFSIZE];
 const char *send_to_client[BUFSIZE];
+*/
+
+char send_to_c[BUFSIZE];
+char send_to_cs[BUFSIZE];
+char send_to_ee[BUFSIZE];
+char send_to_client[BUFSIZE];
 
 char client_buf[BUFSIZE];
 char c_buf[BUFSIZE];
@@ -195,8 +202,8 @@ int main(){
 	cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
 
 	//encrypt information
-	dont_steal_my_info(login_cred);
-	c_buf = crypt_info;
+	strcpy(send_to_c, dont_steal_my_info(login_cred).c_str());
+
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
 	//2. GOTO: serverC.c with string crypt_info
