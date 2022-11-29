@@ -257,11 +257,12 @@ int main(){
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
-		sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr,  sizeof(server_cs_addr));
+		unsigned int cs_len= sizeof(cs_addr);
+		sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr, cs_len);
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
-		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, sizeof(server_cs_addr)); 
+		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
@@ -271,11 +272,11 @@ int main(){
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
-		sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr,  sizeof(server_cs_addr));
+		sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr, cs_len);
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
-		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, sizeof(server_cs_addr)); 
+		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
