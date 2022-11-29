@@ -200,7 +200,7 @@ int main(){
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
 	//2. GOTO: serverC.c with string crypt_info
-	sendto(main_UDP_sock, (char *)send_to_c, strlen(send_to_c), MSG_CONFIRM, (const struct sockaddr *) &server_c_addr,  sizeof(server_c_addr)); 
+	sendto(main_UDP_sock, send_to_c, strlen(send_to_c), MSG_CONFIRM, (const struct sockaddr *) &server_c_addr,  sizeof(server_c_addr)); 
 	//Upon sending an authentication request to serverC
 	cout<<"The main server sent an authentication request to serverC.";
 	client_UDP();
