@@ -166,10 +166,10 @@ string find_code(string query){
 
 int dept_request;
 string department;
-char *send_to_c[BUFSIZE];
-char *send_to_cs[BUFSIZE];
-char *send_to_ee[BUFSIZE];
-char *send_to_client[BUFSIZE];
+char send_to_c[BUFSIZE];
+char send_to_cs[BUFSIZE];
+char send_to_ee[BUFSIZE];
+char send_to_client[BUFSIZE];
 
 int main(){
 	//PHASE 2A
