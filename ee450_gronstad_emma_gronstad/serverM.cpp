@@ -195,7 +195,7 @@ int main(){
 	cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
 
 	//encrypt information
-	dont_steal_my_info(info);
+	dont_steal_my_info(login_cred);
 	send_to_c = crypt_info;
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
@@ -214,7 +214,7 @@ int main(){
 	send_to_client=event;
 	//send result of the authentication request to the client over a TCP connection
 	//4. GOTO: client.c with string event and/or corresponding integer
-	send(server_TCP_sock,send_to_client,strlen(event),0);
+	send(server_TCP_sock,send_to_client,strlen(send_to_client),0);
 	//After sending the authentication result to the client:
 	cout<<"The main server sent the authentication result to the client.";
 
@@ -254,7 +254,7 @@ int main(){
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
-		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &sizeof(server_cs_addr)); 
+		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, sizeof(server_cs_addr)); 
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
@@ -268,7 +268,7 @@ int main(){
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
-		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &sizeof(server_cs_addr)); 
+		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, sizeof(server_cs_addr)); 
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
@@ -276,9 +276,9 @@ int main(){
 	}
 	//forward the result to the client using TCP
 	//8. GOTO: client.c with course_info
-	send(server_TCP_sock,course_info,strlen(course_info),0);
+	send(server_TCP_sock,send_to_client,strlen(send_to_client),0);
 	//print out an on-screen message
 	//After sending the query information to the client:
-	cout<<"The main server sent the query information to the client."
+	cout<<"The main server sent the query information to the client.";
 	return 0;
 }
