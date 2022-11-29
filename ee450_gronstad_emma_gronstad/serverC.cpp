@@ -19,6 +19,7 @@ Each backend server should read the corresponding file and store the information
 #include <errno.h> 
 #include <sys/wait.h>
 
+using namespace std;
 
 #define CREDTXT "cred.txt"
 #define C_PORT     21267 
@@ -113,7 +114,7 @@ void server_UDP(){
 int main(){
 	//PHASE 2A
 	//receive authentication request w encrypted form of username and password
-	char login = recvfrom(c_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (const struct sockaddr *) &main_addr, &sizeof(main_addr));
+	char login = recvfrom(c_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (const struct sockaddr *) &main_addr, sizeof(main_addr));
 	//Upon receiving the request from main server:
 	cout<<"The ServerC received an authentication request from the Main Server.";
 	//3. GOTO: serverM.c with string event and/or corresponding integer
