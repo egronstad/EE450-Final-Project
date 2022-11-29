@@ -70,7 +70,7 @@ void client_TCP(){
         cout<<"Address not supported"<<endl;
     }
     
-    if ((client_fd = connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr))) < 0) {
+    if ((client_fd = connect(client_TCP_sock, (struct sockaddr*)&servAddr, sizeof(servAddr))) < 0) {
         cout<<"Connection Failed"<<endl;
     }
     
