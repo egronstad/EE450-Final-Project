@@ -66,8 +66,8 @@ void server_UDP(){
 }
 
 vector<string> cs_vec;
-stringstream ss(cs_vec);
 string word;
+fstream cs_file;
 
 void extract_dept_file(){
 	cs_file.open(DEPTFILE.c_str());
