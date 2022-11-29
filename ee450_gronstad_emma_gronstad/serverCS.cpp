@@ -31,7 +31,7 @@ char main_buf[BUFSIZE];
 char send_to_main[BUFSIZE];
 int cs_UDP_sock;
 struct sockaddr_in servaddr, cliaddr; 
-struct sockaddr_in main_addr
+struct sockaddr_in main_addr;
 
 void server_UDP(){ 
 	//referenced https://www.geeksforgeeks.org/udp-server-client-implementation-c/
@@ -102,7 +102,7 @@ string course_code;
 string category;
 
 void query_split(string query){
-	stringstream ss(login_cred);
+	stringstream ss(query);
     string word;
     int num=1;
     while (!ss.eof()) {
@@ -130,7 +130,7 @@ int main(){
 	//Split course_query info into course_code & category
 	string course_query = query;
 	query_split(course_query);
-	course_info = find_info(course_code, category);
+	string course_info = find_info(course_code, category);
 	
 	if (course_info!="0"){
 		//If the course is found:
