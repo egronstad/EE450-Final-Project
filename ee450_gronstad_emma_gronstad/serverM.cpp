@@ -14,7 +14,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <errno.h> 
-#include <sys/wait.h
+#include <sys/wait.h>
 
 using namespace std;
 
