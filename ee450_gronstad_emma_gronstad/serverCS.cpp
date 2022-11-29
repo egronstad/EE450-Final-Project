@@ -69,10 +69,10 @@ void server_UDP(){
 
 vector<string> cs_vec;
 string word;
-fstream cs_file;
 
 void extract_dept_file(){
-	cs_file.open(DEPTFILE.c_str());
+	std::ifstream DEPTFILE ("cs.txt");
+	std::string cs_file (std::istreambuf_iterator<char>(DEPTFILE),(std::istreambuf_iterator<char>()) );
     while(cs_file>>word){
     	cs_vec.push_back(word);
     }
