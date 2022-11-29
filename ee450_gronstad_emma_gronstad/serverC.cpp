@@ -23,8 +23,8 @@ Each backend server should read the corresponding file and store the information
 
 using namespace std;
 
-#define C_PORT     21267 
-#define M_PORT     24267
+#define C_PORT 21267 
+#define M_PORT 24267
 
 #define BUFSIZE 1024
 
@@ -32,7 +32,6 @@ char main_buf[BUFSIZE];
 char send_to_main[BUFSIZE];
 
 string event = "";
-
 
 string cred_check(string login_cred){
 	//read file
