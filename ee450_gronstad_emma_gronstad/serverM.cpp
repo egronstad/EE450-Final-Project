@@ -195,103 +195,107 @@ int main(){
 	server_TCP();
 	client_UDP();
 	
-	read_len = recv(newSd, (char*)&msg, sizeof(msg), 0);
-	string login_cred = msg;
-	username=find_user(login_cred);
-	//After receiving the username and password from the client:
-	cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
+	while (1){
+		read_len = recv(newSd, (char*)&msg, sizeof(msg), 0);
+		string login_cred = msg;
+		username=find_user(login_cred);
+		//After receiving the username and password from the client:
+		cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
 
-	//encrypt information
-	dont_steal_my_info(msg);
-	strcpy(send_to_c, crypt_info);
-	
-	//send encrypted information to the credential server
-	//forward the authentication request to the credentials server over UDP
-	//2. GOTO: serverC.c with string crypt_info
-	unsigned int c_len= sizeof(server_c_addr);
-	sendto(main_UDP_sock, (const char *)send_to_c, strlen(send_to_c), MSG_CONFIRM, (const struct sockaddr *) &server_c_addr, c_len); 
-	//Upon sending an authentication request to serverC
-	cout<<"The main server sent an authentication request to serverC.";
-	
-	c_buf_len = recvfrom(main_UDP_sock, (char *)c_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_c_addr, &c_len); 
-	
-	//After receiving result of the authentication request from serverC:
-	cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
-	
-	//PHASE 2B
-	strcpy(send_to_client, c_buf);
-	//send result of the authentication request to the client over a TCP connection
-	//4. GOTO: client.c with string event and/or corresponding integer
-	send(server_TCP_sock,(char*)send_to_client,strlen(send_to_client),0);
-	//After sending the authentication result to the client:
-	cout<<"The main server sent the authentication result to the client.";
-
-	//PHASE 3A
-	//receive course query information from client over TCP
-	//1 to represent EE
-	//0 to represent CS
-	read_len = recv(newSd, (char*)&msg, sizeof(msg), 0);
-	string course_query = msg;
-	//when receiving the information from the client, output an on-screen message
-	//After receiving the query information from the client:
-	cout<<"The main server received from "<<username<<" to query course "<<course_code<<" about "<<category<<" using TCP over port 25267.";
-	//extract the department information from the query
-	find_code(course_query);
-	
-	string ee_dept="EE";
-	string cs_dept="CS";
-	int dept_flag;
-	string course_code;
-
-	//check if CS or EE class
-    if (course_code.substr(0,2)=="CS"){
-    	department="CS";
-        dept_flag=0;
-    }else if (course_code.substr(0,2)=="EE"){
-   		department="EE";
-        dept_flag=1;
-    }
-    
-	//decide which department server has the corresponding information
-	if (dept_flag==0){
-		strcpy(send_to_cs, course_query.c_str());
-		//PHASE 3B
-		//send the query information to the backend department server via UDP connection
-		//6. GOTO: serverCS.c/serverEE.c with course_query
-		unsigned int cs_len= sizeof(server_cs_addr);
-		sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr, cs_len);
-		//output an on-screen message upon sending the request to the backend server
-		//After querying EE or CS Department Server
-		cout<<"The main server sent a request to server"<<department<<".";
-		cs_buf_len = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
-		course_info = cs_buf;
-		//PHASE 4B
-		//when main server receives the result, print out an on-screen message
-		//After receiving result from EE or CS Department server i for query information:
-		cout<<"The main server received the response from server"<<department<<" using UDP over port 24267.";
-	}else if(dept_flag==1){
-		strcpy(send_to_ee, course_query.c_str());
-		//PHASE 3B
-		//send the query information to the backend department server via UDP connection
-		//6. GOTO: serverCS.c/serverEE.c with course_query
-		unsigned int ee_len= sizeof(server_ee_addr);
-		sendto(main_UDP_sock, (const char *)send_to_ee, strlen(send_to_ee), MSG_CONFIRM, (const struct sockaddr *) &server_ee_addr, ee_len);
-		//output an on-screen message upon sending the request to the backend server
-		//After querying EE or CS Department Server
-		cout<<"The main server sent a request to server"<<department<<".";
-		ee_buf_len = recvfrom(main_UDP_sock, (char *)ee_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_ee_addr, &ee_len); 
-		course_info = ee_buf;
-		//PHASE 4B
-		//when main server receives the result, print out an on-screen message
-		//After receiving result from EE or CS Department server i for query information:
-		cout<<"The main server received the response from server"<<department<<" using UDP over port 24267.";
+		//encrypt information
+		dont_steal_my_info(msg);
+		strcpy(send_to_c, crypt_info);
+		
+		//send encrypted information to the credential server
+		//forward the authentication request to the credentials server over UDP
+		//2. GOTO: serverC.c with string crypt_info
+		unsigned int c_len= sizeof(server_c_addr);
+		sendto(main_UDP_sock, (const char *)send_to_c, strlen(send_to_c), MSG_CONFIRM, (const struct sockaddr *) &server_c_addr, c_len); 
+		//Upon sending an authentication request to serverC
+		cout<<"The main server sent an authentication request to serverC.";
+		
+		c_buf_len = recvfrom(main_UDP_sock, (char *)c_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_c_addr, &c_len); 
+		
+			//After receiving result of the authentication request from serverC:
+		cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
+		
+		//PHASE 2B
+		strcpy(send_to_client, c_buf);
+		//send result of the authentication request to the client over a TCP connection
+		//4. GOTO: client.c with string event and/or corresponding integer
+		send(server_TCP_sock,(char*)send_to_client,strlen(send_to_client),0);
+		//After sending the authentication result to the client:
+		cout<<"The main server sent the authentication result to the client.";
 	}
-	//forward the result to the client using TCP
-	//8. GOTO: client.c with course_info
-	strcpy(send_to_client, course_info.c_str());
-	send(server_TCP_sock,send_to_client,strlen(send_to_client),0);
-	//print out an on-screen message
-	//After sending the query information to the client:
-	cout<<"The main server sent the query information to the client.";
+	
+	while (1){
+		//PHASE 3A
+		//receive course query information from client over TCP
+		//1 to represent EE
+		//0 to represent CS
+		read_len = recv(newSd, (char*)&msg, sizeof(msg), 0);
+		string course_query = msg;
+		//when receiving the information from the client, output an on-screen message
+		//After receiving the query information from the client:
+		cout<<"The main server received from "<<username<<" to query course "<<course_code<<" about "<<category<<" using TCP over port 25267.";
+		//extract the department information from the query
+		find_code(course_query);
+		
+		string ee_dept="EE";
+		string cs_dept="CS";
+		int dept_flag;
+		string course_code;
+
+		//check if CS or EE class
+	    if (course_code.substr(0,2)=="CS"){
+	    	department="CS";
+	        dept_flag=0;
+	    }else if (course_code.substr(0,2)=="EE"){
+	   		department="EE";
+   	     	dept_flag=1;
+    	}
+    
+		//decide which department server has the corresponding information
+		if (dept_flag==0){
+			strcpy(send_to_cs, course_query.c_str());
+			//PHASE 3B
+			//send the query information to the backend department server via UDP connection
+			//6. GOTO: serverCS.c/serverEE.c with course_query
+			unsigned int cs_len= sizeof(server_cs_addr);
+			sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr, cs_len);
+			//output an on-screen message upon sending the request to the backend server
+			//After querying EE or CS Department Server
+			cout<<"The main server sent a request to server"<<department<<".";
+			cs_buf_len = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
+			course_info = cs_buf;
+			//PHASE 4B
+			//when main server receives the result, print out an on-screen message
+			//After receiving result from EE or CS Department server i for query information:
+			cout<<"The main server received the response from server"<<department<<" using UDP over port 24267.";
+		}else if(dept_flag==1){
+			strcpy(send_to_ee, course_query.c_str());
+			//PHASE 3B
+			//send the query information to the backend department server via UDP connection
+			//6. GOTO: serverCS.c/serverEE.c with course_query
+			unsigned int ee_len= sizeof(server_ee_addr);
+			sendto(main_UDP_sock, (const char *)send_to_ee, strlen(send_to_ee), MSG_CONFIRM, (const struct sockaddr *) &server_ee_addr, ee_len);
+			//output an on-screen message upon sending the request to the backend server
+			//After querying EE or CS Department Server
+			cout<<"The main server sent a request to server"<<department<<".";
+			ee_buf_len = recvfrom(main_UDP_sock, (char *)ee_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_ee_addr, &ee_len); 
+			course_info = ee_buf;
+			//PHASE 4B
+			//when main server receives the result, print out an on-screen message
+			//After receiving result from EE or CS Department server i for query information:
+			cout<<"The main server received the response from server"<<department<<" using UDP over port 24267.";
+		}
+		//forward the result to the client using TCP
+		//8. GOTO: client.c with course_info
+		strcpy(send_to_client, course_info.c_str());
+		send(server_TCP_sock,send_to_client,strlen(send_to_client),0);
+		//print out an on-screen message
+		//After sending the query information to the client:
+		cout<<"The main server sent the query information to the client.";
+	}
 	return 0;
 }
