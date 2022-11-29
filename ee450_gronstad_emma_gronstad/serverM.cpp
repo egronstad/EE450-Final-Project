@@ -253,7 +253,7 @@ int main(){
     
 	//decide which department server has the corresponding information
 	if (dept_flag==0){
-		send_to_cs=query;
+		strcpy(send_to_cs, course_query.c_str());
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
@@ -268,7 +268,7 @@ int main(){
 		//After receiving result from EE or CS Department server i for query information:
 		cout<<"The main server received the response from server"<<department<<" using UDP over port 24267.";
 	}else if(dept_flag==1){
-		send_to_ee=query;
+		strcpy(send_to_ee, course_query.c_str());
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
