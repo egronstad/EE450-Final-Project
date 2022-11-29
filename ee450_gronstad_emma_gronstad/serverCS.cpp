@@ -19,6 +19,7 @@ Each backend server should read the corresponding file and store the information
 #include <errno.h> 
 #include <sys/wait.h>
 
+using namespace std;
 
 #define DEPTFILE "cs.txt"
 #define CS_PORT    22267
