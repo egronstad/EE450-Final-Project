@@ -109,7 +109,7 @@ int main(){
 				if (event=="login"){
 					//After receiving the result of the authentication request from Main server (if the authentication passed):
 					authentication_flag=1;
-					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication is successful"
+					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication is successful";
 				}else if(event=="user error"){
 					//After receiving the result of the authentication request from Main server (username does not exist): 
 					//login_attempt=2,1,0 after the First,second and third attempt respectively
@@ -124,7 +124,7 @@ int main(){
 			}else{
 				//if all of the attempts fail then the client shuts down after indication that all 3 attempts failed
 				//After receiving the result of the authentication request from Main server (Failure after 3 attempts): 
-				cout<<"Authentication Failed for 3 attempts. Client will shut down."
+				cout<<"Authentication Failed for 3 attempts. Client will shut down.";
 				//Shut down client.
 			}
 		}else{
