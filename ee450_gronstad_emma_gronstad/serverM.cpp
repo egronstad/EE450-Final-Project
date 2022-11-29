@@ -169,14 +169,14 @@ string department;
 char *send_to_c[BUFSIZE];
 char *send_to_cs[BUFSIZE];
 char *send_to_ee[BUFSIZE];
-
+char *send_to_client[BUFSIZE];
 
 int main(){
 	//PHASE 2A
 	//receive unencrypted information from client over TCP
 	server_TCP();
 	char info = recv(newSd, (char*)&client_buf, sizeof(client_buf), 0);
-	string (BUFSIZE, info);
+	string hold = string (BUFSIZE, info);
 	username=find_user(hold);
 	//After receiving the username and password from the client:
 	cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
@@ -197,9 +197,10 @@ int main(){
 	cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
 	
 	//PHASE 2B
+	send_to_client=event;
 	//send result of the authentication request to the client over a TCP connection
 	//4. GOTO: client.c with string event and/or corresponding integer
-	send(server_TCP_sock,event,strlen(event),0);
+	send(server_TCP_sock,send_to_client,strlen(event),0);
 	//After sending the authentication result to the client:
 	cout<<"The main server sent the authentication result to the client.";
 
@@ -208,7 +209,7 @@ int main(){
 	//1 to represent EE
 	//0 to represent CS
 	char query = recv(newSd, (char*)&client_buf, sizeof(client_buf), 0);
-	string course_query = query;
+	string course_query = string (BUFSIZE, query);
 	//when receiving the information from the client, output an on-screen message
 	//After receiving the query information from the client:
 	cout<<"The main server received from "<<username<<" to query course "<<course_code<<" about "<<category<<" using TCP over port 25267.";
