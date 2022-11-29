@@ -146,7 +146,7 @@ int main(){
 
 	//PHASE 4A
 	//have the query information ready
-	send_to_main = course_info;
+	strcpy(send_to_main, course_info.c_str());
 	//query information is sent back to the Main server using UDP
 	//7. GOTO: serverM.c with course_info
 	sendto(cs_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (struct sockaddr *) &main_addr, len);
