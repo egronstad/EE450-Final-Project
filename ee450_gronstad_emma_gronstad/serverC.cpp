@@ -125,7 +125,7 @@ int main(){
 	//Upon receiving the request from main server:
 	cout<<"The ServerC received an authentication request from the Main Server.";
 	//3. GOTO: serverM.c with string event and/or corresponding integer
-	send_to_main=cred_check(login);
+	strcpy(send_to_main, cred_check(login).c_str());
 	sendto(c_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (const struct sockaddr *) &main_addr, len);
 	//After sending the results to the main server:
 	cout<<"The ServerC finished sending the response to the Main Server.";
