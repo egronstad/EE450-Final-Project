@@ -18,6 +18,7 @@ Each backend server should read the corresponding file and store the information
 #include <unistd.h>
 #include <errno.h> 
 #include <sys/wait.h>
+#include <cstring>
 
 using namespace std;
 
