@@ -207,7 +207,7 @@ int main(){
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
 	//2. GOTO: serverC.c with string crypt_info
-	unsigned int c_len= sizeof(c_addr);
+	unsigned int c_len= sizeof(server_c_addr);
 	sendto(main_UDP_sock, (const char *)send_to_c, strlen(send_to_c), MSG_CONFIRM, (const struct sockaddr *) &server_c_addr, c_len); 
 	//Upon sending an authentication request to serverC
 	cout<<"The main server sent an authentication request to serverC.";
@@ -257,7 +257,7 @@ int main(){
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
-		unsigned int cs_len= sizeof(cs_addr);
+		unsigned int cs_len= sizeof(server_cs_addr);
 		sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr, cs_len);
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
@@ -268,15 +268,15 @@ int main(){
 		//After receiving result from EE or CS Department server i for query information:
 		cout<<"The main server received the response from server"<<department<<" using UDP over port 24267.";
 	}else if(dept_flag==1){
-		send_to_cs=query;
+		send_to_ee=query;
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
-		sendto(main_UDP_sock, (const char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr, cs_len);
+		sendto(main_UDP_sock, (const char *)send_to_ee, strlen(send_to_ee), MSG_CONFIRM, (const struct sockaddr *) &server_ee_addr, ee_len);
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
-		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
+		char course_info = recvfrom(main_UDP_sock, (char *)ee_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_ee_addr, &ee_len); 
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
