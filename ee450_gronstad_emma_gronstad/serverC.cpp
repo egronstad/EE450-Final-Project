@@ -119,7 +119,7 @@ int main_buf_len;
 int main(){
 	//PHASE 2A
 	//receive authentication request w encrypted form of username and password
-	int len= sizeof(main_addr);
+	unsigned int len= sizeof(main_addr);
 	main_buf_len = recvfrom(c_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &main_addr, &len);
 	string login = main_buf;
 	//Upon receiving the request from main server:
