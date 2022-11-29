@@ -117,12 +117,12 @@ int main(){
 					//After receiving the result of the authentication request from Main server (username does not exist): 
 					//login_attempt=2,1,0 after the First,second and third attempt respectively
 					login_attempt--;
-					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication failed: Username does not exist"<<endl<<"Attempts remaining: "<<n;
+					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication failed: Username does not exist"<<endl<<"Attempts remaining: "<<login_attempt;
 				}else if(event=="pass error"){
 					//After receiving the result of the authentication request from Main server (Password does not match): 
 					//login_attempt=2,1,0 after the First,second and third attempt respectively
 					login_attempt--;
-					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication failed: Password does not match"<<endl<<"Attempts remaining: "<<n;
+					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication failed: Password does not match"<<endl<<"Attempts remaining: "<<login_attempt;
 				}
 			}else{
 				//if all of the attempts fail then the client shuts down after indication that all 3 attempts failed
