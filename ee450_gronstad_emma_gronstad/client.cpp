@@ -88,8 +88,8 @@ char send_to_main[BUFSIZE];
 int read_len;
 
 int main(){
-	cout<<"The client is up and running.";
 	client_TCP();
+	cout<<"The client is up and running."<<endl;
 	//Booting Up:
 	
 	while(1){
