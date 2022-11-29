@@ -33,7 +33,6 @@ int ee_buf_len;
 
 char crypt_info[BUFSIZE];
 
-
 void dont_steal_my_info(char info[]){
     //encrypt info
 	for(int j=0; j<=strlen(info); j++){
@@ -202,7 +201,8 @@ int main(){
 	cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
 
 	//encrypt information
-	strcpy(send_to_c, dont_steal_my_info(login_cred).c_str());
+	dont_steal_my_info(msg);
+	send_to_c = crypt_info;
 
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
