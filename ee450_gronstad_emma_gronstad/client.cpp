@@ -53,6 +53,7 @@ struct sockaddr_in servAddr;
 struct sockaddr_in my_addr;
 int client_TCP_sock;
 unsigned int client_port;
+int client_fd;
 
 void client_TCP(){
 	//heavily referenced https://github.com/bozkurthan/Simple-TCP-Server-Client-CPP-Example/blob/master/tcp-Server.cpp
@@ -64,6 +65,15 @@ void client_TCP(){
         cout<<("Error establishing the server socket"); 
         //exit(1);
     }
+    
+    if (inet_pton(AF_INET, "127.0.0.1", &servAddr.sin_addr) <= 0) {
+        cout<<"Address not supported"<<endl;
+    }
+    
+    if ((client_fd = connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr))) < 0) {
+        cout<<"Connection Failed"<<endl;
+    }
+    
     int bindStatus = bind(client_TCP_sock, (struct sockaddr*) &servAddr, sizeof(servAddr));
     if(bindStatus < 0){
         cout<<("Error binding socket to local address"); 
@@ -104,10 +114,6 @@ int main(){
 				strcpy(send_to_main, login_cred.c_str());
 				cout<<send_to_main<<endl;
 				send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
-				cout<<"I sent a message";
-				if (!send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0)){
-					cout<<"STINK!!";
-				}
 				
 				//Upon sending authentication request to Main Server:
 				cout<<username<<" sent an authentication request to the main server.";
