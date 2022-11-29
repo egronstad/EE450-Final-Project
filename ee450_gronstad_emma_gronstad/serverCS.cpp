@@ -19,6 +19,7 @@ Each backend server should read the corresponding file and store the information
 #include <errno.h> 
 #include <sys/wait.h>
 #include <cstring>
+#include <string>
 
 using namespace std;
 
