@@ -26,11 +26,13 @@ using namespace std;
 
 #define BUFSIZE 1024
 
-char client_buf[BUFSIZE];
-char c_buf[BUFSIZE];
-char cs_buf[BUFSIZE];
-char ee_buf[BUFSIZE];
+int client_buf_len;
+int c_buf_len;
+int cs_buf_len;
+int ee_buf_len;
+
 char crypt_info[BUFSIZE];
+
 
 void dont_steal_my_info(char info[]){
     //encrypt info
@@ -166,18 +168,29 @@ string find_code(string query){
 
 int dept_request;
 string department;
-char send_to_c[BUFSIZE];
-char send_to_cs[BUFSIZE];
-char send_to_ee[BUFSIZE];
-char send_to_client[BUFSIZE];
+const char *send_to_c[BUFSIZE];
+const char *send_to_cs[BUFSIZE];
+const char *send_to_ee[BUFSIZE];
+const char *send_to_client[BUFSIZE];
+
+char client_buf[BUFSIZE];
+char c_buf[BUFSIZE];
+char cs_buf[BUFSIZE];
+char ee_buf[BUFSIZE];
+
+char msg[BUFSIZE]
+
+int read_len = 0;
 
 int main(){
 	//PHASE 2A
 	//receive unencrypted information from client over TCP
 	server_TCP();
-	char info = recv(newSd, (char*)&client_buf, sizeof(client_buf), 0);
-	string hold = string (BUFSIZE, info);
-	username=find_user(hold);
+	client_UDP();
+	
+	read_len = recv(newSd, (char*)&msg, sizeof(msg), 0);
+	string login_cred = msg;
+	username=find_user(login_cred);
 	//After receiving the username and password from the client:
 	cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
 
@@ -193,6 +206,7 @@ int main(){
 	client_UDP();
 	
 	char event = recvfrom(main_UDP_sock, (char *)c_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_c_addr, &sizeof(server_c_addr)); 
+	
 	//After receiving result of the authentication request from serverC:
 	cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
 	
@@ -208,8 +222,8 @@ int main(){
 	//receive course query information from client over TCP
 	//1 to represent EE
 	//0 to represent CS
-	char query = recv(newSd, (char*)&client_buf, sizeof(client_buf), 0);
-	string course_query = string (BUFSIZE, query);
+	read_len = recv(newSd, (char*)&msg, sizeof(msg), 0);
+	string course_query = msg;
 	//when receiving the information from the client, output an on-screen message
 	//After receiving the query information from the client:
 	cout<<"The main server received from "<<username<<" to query course "<<course_code<<" about "<<category<<" using TCP over port 25267.";
