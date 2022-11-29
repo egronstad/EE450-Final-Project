@@ -93,14 +93,22 @@ int main(){
 	
 	while(1){
 		//If not authorized yet
-		//if(authentication_flag!=1){
+		if(authentication_flag!=1){
 			//ask to enter the username and password on the terminal
 			if(login_attempt>=0){//PHASE 1A
 				//send authentication request to the serverM over TCP connection
 				//1. GOTO: serverM.c with string login_cred & username
+				
 				login();
+				cout<<login_cred<<endl;
 				strcpy(send_to_main, login_cred.c_str());
+				cout<<send_to_main<<endl;
 				send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
+				
+				if (!send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0)){
+					cout<<"STINK!!";
+				}
+				
 				//Upon sending authentication request to Main Server:
 				cout<<username<<" sent an authentication request to the main server.";
 				
@@ -111,7 +119,7 @@ int main(){
 				//if the result of the authentication request is a failure then the client will have two more attempts
 				if (event=="login"){
 					//After receiving the result of the authentication request from Main server (if the authentication passed):
-					//authentication_flag=1;
+					authentication_flag=1;
 					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication is successful";
 				}else if(event=="user error"){
 					//After receiving the result of the authentication request from Main server (username does not exist): 
@@ -130,7 +138,7 @@ int main(){
 				cout<<"Authentication Failed for 3 attempts. Client will shut down.";
 				//Shut down client.
 			}
-		//}else{
+		}else{
 			//if any of the athentication attempts pass then the client stays on until it is manually shut down
 			query();
 			//PHASE 3A
@@ -156,7 +164,7 @@ int main(){
 				//If the course is not found:
 				cout<<"Didn't find the course: "<<course_code<<".\n\n-----Start a new request-----\nPlease enter the course code to query: ";
 			}
-		//}
+		}
 	}
 	
 	return 0;
