@@ -203,16 +203,16 @@ int main(){
 	//encrypt information
 	dont_steal_my_info(msg);
 	send_to_c = crypt_info;
-
+	
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
 	//2. GOTO: serverC.c with string crypt_info
-	sendto(main_UDP_sock, (const char *)send_to_c, strlen(send_to_c), MSG_CONFIRM, (const struct sockaddr *) &server_c_addr,  sizeof(server_c_addr)); 
+	unsigned int c_len= sizeof(c_addr);
+	sendto(main_UDP_sock, (const char *)send_to_c, strlen(send_to_c), MSG_CONFIRM, (const struct sockaddr *) &server_c_addr, c_len); 
 	//Upon sending an authentication request to serverC
 	cout<<"The main server sent an authentication request to serverC.";
-	client_UDP();
 	
-	char event = recvfrom(main_UDP_sock, (char *)c_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_c_addr, &sizeof(server_c_addr)); 
+	char event = recvfrom(main_UDP_sock, (char *)c_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_c_addr, &c_len); 
 	
 	//After receiving result of the authentication request from serverC:
 	cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
