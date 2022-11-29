@@ -17,7 +17,7 @@ client.c
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <errno.h> 
-#include <sys/wait.h
+#include <sys/wait.h>
 
 #define port "25267"
 #define BUFSIZE 1024

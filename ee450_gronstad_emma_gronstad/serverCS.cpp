@@ -17,7 +17,7 @@ Each backend server should read the corresponding file and store the information
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <errno.h> 
-#include <sys/wait.h
+#include <sys/wait.h>
 
 
 #define DEPTFILE "cs.txt"
