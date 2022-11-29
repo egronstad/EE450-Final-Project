@@ -178,7 +178,7 @@ char c_buf[BUFSIZE];
 char cs_buf[BUFSIZE];
 char ee_buf[BUFSIZE];
 
-char msg[BUFSIZE]
+char msg[BUFSIZE];
 
 int read_len = 0;
 
