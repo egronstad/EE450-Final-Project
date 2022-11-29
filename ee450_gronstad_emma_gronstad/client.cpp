@@ -77,7 +77,7 @@ void client_TCP(){
 }
 
 int login_attempt=3;
-//int authentication_flag=0;
+int authentication_flag=0;
 string event;
 
 char cred_buf[BUFSIZE];
