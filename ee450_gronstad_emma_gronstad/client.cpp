@@ -77,7 +77,7 @@ void client_TCP(){
 }
 
 int login_attempt=3;
-int authentication_flag=0;
+//int authentication_flag=0;
 string event;
 
 char cred_buf[BUFSIZE];
@@ -93,7 +93,7 @@ int main(){
 	
 	while(1){
 		//If not authorized yet
-		if(authentication_flag!=1){
+		//if(authentication_flag!=1){
 			//ask to enter the username and password on the terminal
 			if(login_attempt>=0){//PHASE 1A
 				//send authentication request to the serverM over TCP connection
@@ -104,14 +104,14 @@ int main(){
 				//Upon sending authentication request to Main Server:
 				cout<<username<<" sent an authentication request to the main server.";
 				
-			//PHASE 2B
-			read_len = recv(client_TCP_sock, cred_buf, sizeof(cred_buf), 0);
-			string event=cred_buf;
-			//display result of authentication request (on-screen message) on the client screen
-			//if the result of the authentication request is a failure then the client will have two more attempts
+				//PHASE 2B
+				read_len = recv(client_TCP_sock, cred_buf, sizeof(cred_buf), 0);
+				string event=cred_buf;
+				//display result of authentication request (on-screen message) on the client screen
+				//if the result of the authentication request is a failure then the client will have two more attempts
 				if (event=="login"){
 					//After receiving the result of the authentication request from Main server (if the authentication passed):
-					authentication_flag=1;
+					//authentication_flag=1;
 					cout<<username<<" received the result of authentication using TCP over port "<<port<<". Authentication is successful";
 				}else if(event=="user error"){
 					//After receiving the result of the authentication request from Main server (username does not exist): 
