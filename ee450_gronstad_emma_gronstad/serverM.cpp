@@ -202,7 +202,7 @@ int main(){
 
 	//encrypt information
 	dont_steal_my_info(msg);
-	strcpy(send_to_c, crypt_info.c_str());
+	strcpy(send_to_c, crypt_info);
 	
 	//send encrypted information to the credential server
 	//forward the authentication request to the credentials server over UDP
@@ -218,7 +218,7 @@ int main(){
 	cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
 	
 	//PHASE 2B
-	strcpy(send_to_client, event.c_str());
+	strcpy(send_to_client, event);
 	//send result of the authentication request to the client over a TCP connection
 	//4. GOTO: client.c with string event and/or corresponding integer
 	send(server_TCP_sock,(char*)send_to_client,strlen(send_to_client),0);
