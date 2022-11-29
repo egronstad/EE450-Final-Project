@@ -28,13 +28,12 @@ string username;
 string password;
 string login_cred;
 
-string login(){
+void login(){
 	cout<<"Please enter the username: ";
 	getline(cin, username);
    	cout<<"Please enter the password: ";
 	getline(cin, password);
 	login_cred=username+","+password;
-	return login_cred;
 }
 
 string course_code;
