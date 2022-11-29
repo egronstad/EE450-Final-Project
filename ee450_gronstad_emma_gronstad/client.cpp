@@ -84,11 +84,12 @@ string event;
 char cred_buf[BUFSIZE];
 char query_buf[BUFSIZE];
 
+int read_len;
+
 int main(){
-	if (client_connect()==1){
-		//Booting Up:
-		cout<<"The client is up and running.";
-	}
+	client_TCP();
+	//Booting Up:
+	cout<<"The client is up and running.";
 	
 	while(1){
 		//If not authorized yet
@@ -98,12 +99,14 @@ int main(){
 				//send authentication request to the serverM over TCP connection
 				//1. GOTO: serverM.c with string login_cred & username
 				login_cred = login();
+				
 				send(client_TCP_sock,login_cred,strlen(login_cred),0);
 				//Upon sending authentication request to Main Server:
 				cout<<username<<" sent an authentication request to the main server.";
 				
 			//PHASE 2B
-			string event=recv(client_TCP_sock, cred_buf, sizeof(cred_buf), 0);
+			read_len = recv(client_TCP_sock, cred_buf, sizeof(cred_buf), 0);
+			string event=cred_buf;
 			//display result of authentication request (on-screen message) on the client screen
 			//if the result of the authentication request is a failure then the client will have two more attempts
 				if (event=="login"){
@@ -139,7 +142,8 @@ int main(){
 			cout<<username<<" sent a request to the main server."
 
 			//PHASE 4B
-			string info=recv(client_TCP_sock, query_buf, sizeof(query_buf), 0);
+			read_len = recv(client_TCP_sock, query_buf, sizeof(query_buf), 0);
+			string info = query_buf; 
 			//when the client receives the result, print out the query information
 			//After receiving the query information from the Main server:
 			cout<<"The client received the response from the Main server using TCP over port "<<port<<".";
