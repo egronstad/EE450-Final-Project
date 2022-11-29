@@ -74,13 +74,13 @@ void server_TCP(){
     sendSockAddr.sin_port = htons(server_TCP_sock);
     server_TCP_sock = socket(AF_INET, SOCK_STREAM, 0);
     if(server_TCP_sock < 0){
-        perror("Error establishing the server socket"); 
-        exit(1);
+        cout << "Error establishing the server socket" << endl; 
+        //exit(1);
     }
     int bindStatus = bind(server_TCP_sock, (struct sockaddr*) &sendSockAddr, sizeof(sendSockAddr));
     if(bindStatus < 0){
         cout << "Error binding socket to local address" << endl;
-        exit(1);
+        //exit(1);
     }
     listen(server_TCP_sock, 5);
     sockaddr_in newSockAddr;
@@ -88,7 +88,7 @@ void server_TCP(){
     newSd = accept(server_TCP_sock, (sockaddr *)&newSockAddr, &newSockAddrSize);
     if(newSd < 0){
         cout << "Error accepting request from client!" << endl;
-        exit(0);
+        //exit(0);
     }
     //Booting Up (only while starting):
 	cout<<"The main server is up and running.";
