@@ -140,7 +140,7 @@ int main(){
 			send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
 			//upon sending the request to the main server, output an on-screen message
 			//Upon sending the request to Main server:
-			cout<<username<<" sent a request to the main server."
+			cout<<username<<" sent a request to the main server.";
 
 			//PHASE 4B
 			read_len = recv(client_TCP_sock, query_buf, sizeof(query_buf), 0);
@@ -149,7 +149,7 @@ int main(){
 			//After receiving the query information from the Main server:
 			cout<<"The client received the response from the Main server using TCP over port "<<port<<".";
 			//print out the prompt messages for a new request
-			if(found==1){
+			if(query_buf){
 				//If the information is successfully found:
 				cout<<"The "<<category<<" of "<<course_code<<" is "<<info<<".\n\n-----Start a new request-----\nPlease enter the course code to query: ";
 			}else{
