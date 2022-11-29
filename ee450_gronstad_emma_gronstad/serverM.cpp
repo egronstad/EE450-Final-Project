@@ -26,11 +26,6 @@ using namespace std;
 
 #define BUFSIZE 1024
 
-int client_buf_len;
-int c_buf_len;
-int cs_buf_len;
-int ee_buf_len;
-
 char crypt_info[BUFSIZE];
 
 void dont_steal_my_info(char info[]){
