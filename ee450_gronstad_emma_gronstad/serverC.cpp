@@ -18,10 +18,11 @@ Each backend server should read the corresponding file and store the information
 #include <unistd.h>
 #include <errno.h> 
 #include <sys/wait.h>
+#include <fstream>
+#include <iterator>
 
 using namespace std;
 
-#define CREDTXT "cred.txt"
 #define C_PORT     21267 
 #define M_PORT     24267
 
@@ -32,10 +33,12 @@ char send_to_main[BUFSIZE];
 
 string event = "";
 
+
 string cred_check(string login_cred){
 	//read file
-	string cred_file;
-	cred_file.open(CREDTXT.c_str());
+	std::ifstream CREDTXT ("cred.txt");
+	std::string cred_file (std::istreambuf_iterator<char>(CREDTXT),(std::istreambuf_iterator<char>()) );
+
 	string username;
 	string password;
 
