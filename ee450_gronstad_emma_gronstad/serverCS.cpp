@@ -127,14 +127,13 @@ int main(){
 	//PHASE 3B
 	//after getting the query information, look through stored local information to obtain the corresponding course information.
 	unsigned int len= sizeof(main_addr);
-	main_buf_len = recvfrom(cs_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (const struct sockaddr *) &main_addr, &len); 
+	main_buf_len = recvfrom(cs_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &main_addr, &len); 
 	string query = main_buf;
 	//After receiving the request from main server:
 	cout<<"The ServerCS received a request from the Main Server about the "<<category<<" of "<<course_code<<".";
 	extract_dept_file();
 	//Split course_query info into course_code & category
-	string course_query = query;
-	query_split(course_query);
+	query_split(query);
 	string course_info = find_info(course_code, category);
 	
 	if (course_info!="0"){
