@@ -26,7 +26,7 @@ Each backend server should read the corresponding file and store the information
 
 using namespace std;
 
-#define DEPTFILE "cs.txt"
+//#define DEPTFILE "cs.txt"
 #define CS_PORT    22267
 #define EE_PORT    23267
 #define M_PORT     24267
