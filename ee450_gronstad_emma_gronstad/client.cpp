@@ -62,19 +62,19 @@ void client_TCP(){
 
     client_TCP_sock = socket(AF_INET, SOCK_STREAM, 0);
     if(client_TCP_sock < 0){
-        perror("Error establishing the server socket"); 
-        exit(1);
+        cout<<("Error establishing the server socket"); 
+        //exit(1);
     }
     int bindStatus = bind(client_TCP_sock, (struct sockaddr*) &servAddr, sizeof(servAddr));
     if(bindStatus < 0){
-        perror("Error binding socket to local address"); 
-        exit(1);
+        cout<<("Error binding socket to local address"); 
+        //exit(1);
     }
     bzero((char*)&my_addr, sizeof(my_addr));
     socklen_t len = sizeof(my_addr);
   	getsockname(client_TCP_sock, (struct sockaddr*) &my_addr, (socklen_t*)&len);
     client_port = ntohs(my_addr.sin_port);
-    exit(0);
+    //exit(0);
 }
 
 int login_attempt=3;
