@@ -187,6 +187,8 @@ int cs_buf_len;
 int ee_buf_len;
 int read_len;
 
+string course_info;
+
 int main(){
 	//PHASE 2A
 	//receive unencrypted information from client over TCP
@@ -262,7 +264,7 @@ int main(){
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
 		cs_buf_len = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
-		string course_info = cs_buf;
+		course_info = cs_buf;
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
@@ -278,7 +280,7 @@ int main(){
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
 		ee_buf_len = recvfrom(main_UDP_sock, (char *)ee_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_ee_addr, &ee_len); 
-		string course_info = ee_buf;
+		course_info = ee_buf;
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
