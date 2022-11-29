@@ -115,7 +115,6 @@ void server_UDP(){
 }
 
 int main_buf_len;
-char main_buf;
 
 int main(){
 	//PHASE 2A
