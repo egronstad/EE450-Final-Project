@@ -130,7 +130,7 @@ int main(){
 				cout<<"Authentication Failed for 3 attempts. Client will shut down.";
 				//Shut down client.
 			}
-		}else{
+		//}else{
 			//if any of the athentication attempts pass then the client stays on until it is manually shut down
 			query();
 			//PHASE 3A
@@ -156,7 +156,7 @@ int main(){
 				//If the course is not found:
 				cout<<"Didn't find the course: "<<course_code<<".\n\n-----Start a new request-----\nPlease enter the course code to query: ";
 			}
-		}
+		//}
 	}
 	
 	return 0;
