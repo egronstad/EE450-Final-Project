@@ -77,7 +77,7 @@ void extract_dept_file(){
 	//std::ifstream DEPTFILE ("cs.txt");
 	//std::string cs_file( std::istreambuf_iterator<char>(DEPTFILE),(std::istreambuf_iterator<char>()) );
 	std::ifstream DEPTFILE("cs.txt");
-  	std::istream_iterator start(DEPTFILE), end;
+  	std::istreambuf_iterator<char> start(DEPTFILE), end;
   	std::vector cs_vec(start, end);
     //while(cs_file>>word){
     	//cs_vec.push_back(word);
