@@ -75,7 +75,7 @@ string cred_check(string login_cred){
 
 int c_UDP_sock;
 struct sockaddr_in servaddr, cliaddr; 
-struct sockaddr_in main_addr
+struct sockaddr_in main_addr;
 
 void server_UDP(){
 	//referenced https://www.geeksforgeeks.org/udp-server-client-implementation-c/
