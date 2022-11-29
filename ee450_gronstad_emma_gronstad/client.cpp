@@ -88,9 +88,9 @@ char send_to_main[BUFSIZE];
 int read_len;
 
 int main(){
+	cout<<"The client is up and running.";
 	client_TCP();
 	//Booting Up:
-	cout<<"The client is up and running.";
 	
 	while(1){
 		//If not authorized yet
