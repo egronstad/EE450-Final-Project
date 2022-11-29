@@ -99,7 +99,8 @@ int main(){
 			if(login_attempt>=0){//PHASE 1A
 				//send authentication request to the serverM over TCP connection
 				//1. GOTO: serverM.c with string login_cred & username
-				strcpy(send_to_main, login().c_str());
+				login();
+				strcpy(send_to_main, login_cred.c_str());
 				send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
 				//Upon sending authentication request to Main Server:
 				cout<<username<<" sent an authentication request to the main server.";
