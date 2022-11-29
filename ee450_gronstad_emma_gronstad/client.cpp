@@ -83,6 +83,7 @@ string event;
 
 char cred_buf[BUFSIZE];
 char query_buf[BUFSIZE];
+char send_to_main[BUFSIZE];
 
 int read_len;
 
@@ -98,9 +99,8 @@ int main(){
 			if(login_attempt>=0){//PHASE 1A
 				//send authentication request to the serverM over TCP connection
 				//1. GOTO: serverM.c with string login_cred & username
-				login_cred = login();
-				
-				send(client_TCP_sock,login_cred,strlen(login_cred),0);
+				strcpy(send_to_main, login().c_str());
+				send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
 				//Upon sending authentication request to Main Server:
 				cout<<username<<" sent an authentication request to the main server.";
 				
@@ -136,7 +136,8 @@ int main(){
 			//PHASE 3A
 			//send course query request to serverM over TCP connection
 			//5. GOTO serverM.c with string course_query
-			send(client_TCP_sock,course_query,strlen(course_query),0);
+			strcpy(send_to_main, course_query.c_str());
+			send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
 			//upon sending the request to the main server, output an on-screen message
 			//Upon sending the request to Main server:
 			cout<<username<<" sent a request to the main server."
