@@ -20,6 +20,9 @@ Each backend server should read the corresponding file and store the information
 #include <sys/wait.h>
 #include <cstring>
 #include <string>
+#include <fstream>
+#include <iterator>
+
 
 using namespace std;
 
