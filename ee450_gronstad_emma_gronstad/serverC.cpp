@@ -22,6 +22,7 @@ Each backend server should read the corresponding file and store the information
 
 #define CREDTXT "cred.txt"
 #define C_PORT     21267 
+#define M_PORT     24267
 
 #define BUFSIZE 1024
 
