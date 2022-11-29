@@ -114,15 +114,20 @@ void server_UDP(){
 	cout<<"The ServerC is up and running using UDP on port 21267.";
 }
 
+int main_buf_len;
+char main_buf;
+
 int main(){
 	//PHASE 2A
 	//receive authentication request w encrypted form of username and password
-	char login = recvfrom(c_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &main_addr, sizeof(main_addr));
+	int len= sizeof(main_addr);
+	main_buf_len = recvfrom(c_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &main_addr, &len);
+	string login = main_buf;
 	//Upon receiving the request from main server:
 	cout<<"The ServerC received an authentication request from the Main Server.";
 	//3. GOTO: serverM.c with string event and/or corresponding integer
 	send_to_main=cred_check(login);
-	sendto(c_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (const struct sockaddr *) &main_addr,  sizeof(main_addr));
+	sendto(c_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (const struct sockaddr *) &main_addr, len);
 	//After sending the results to the main server:
 	cout<<"The ServerC finished sending the response to the Main Server.";
 	
