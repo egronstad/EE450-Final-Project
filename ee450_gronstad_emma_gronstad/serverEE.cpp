@@ -3,7 +3,7 @@ serverEE.c
 Each backend server should read the corresponding file and store the information in a certain data structure.
 
 */
-#include <cstring>
+#include <eetring>
 #include <iostream>
 #include <string.h>
 #include <bits/stdc++.h>
@@ -18,10 +18,16 @@ Each backend server should read the corresponding file and store the information
 #include <unistd.h>
 #include <errno.h> 
 #include <sys/wait.h>
+#include <eetring>
+#include <string>
+#include <fstream>
+#include <iterator>
 
 
-#define DEPTFILE "ee.txt"
-#define CS_PORT    22267
+using namespace std;
+
+//#define DEPTFILE "ee.txt"
+#define EE_PORT    22267
 #define EE_PORT    23267
 #define M_PORT     24267
 #define BUFSIZE 1024
@@ -30,7 +36,7 @@ char main_buf[BUFSIZE];
 char send_to_main[BUFSIZE];
 int ee_UDP_sock;
 struct sockaddr_in servaddr, cliaddr; 
-struct sockaddr_in main_addr
+struct sockaddr_in main_addr;
 
 void server_UDP(){ 
 	//referenced https://www.geeksforgeeks.org/udp-server-client-implementation-c/
@@ -64,15 +70,18 @@ void server_UDP(){
 	cout<<"The ServerEE is up and running using UDP on port 22267.";
 }
 
-vector<string> ee_file;
-stringstream ss(ee_file);
+vector<string> ee_vec;
 string word;
 
 void extract_dept_file(){
-	ee_file.open(DEPTFILE.c_str());
-    while(ee_file>>word){
-    	ee_vec.push_back(word);
-    }
+	//std::ifstream DEPTFILE ("ee.txt");
+	//std::string ee_file( std::istreambuf_iterator<char>(DEPTFILE),(std::istreambuf_iterator<char>()) );
+	std::ifstream DEPTFILE("ee.txt");
+  	std::istreambuf_iterator<char> start(DEPTFILE), end;
+  	std::vector ee_vec(start, end);
+    //while(ee_file>>word){
+    	//ee_vec.push_back(word);
+    //}
 }
 
 int code_index;
@@ -101,7 +110,7 @@ string course_code;
 string category;
 
 void query_split(string query){
-	stringstream ss(login_cred);
+	stringstream ss(query);
     string word;
     int num=1;
     while (!ss.eof()) {
@@ -115,18 +124,20 @@ void query_split(string query){
     }
 }
 
+int main_buf_len;
 
 int main(){
 	//PHASE 3B
 	//after getting the query information, look through stored local information to obtain the corresponding course information.
-	char query = recvfrom(ee_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (const struct sockaddr *) &main_addr, &sizeof(main_addr)); 
+	unsigned int len= sizeof(main_addr);
+	main_buf_len = recvfrom(ee_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &main_addr, &len); 
+	string query = main_buf;
 	//After receiving the request from main server:
 	cout<<"The ServerEE received a request from the Main Server about the "<<category<<" of "<<course_code<<".";
 	extract_dept_file();
 	//Split course_query info into course_code & category
-	string course_query = query;
-	query_split(course_query);
-	course_info = find_info(course_code, category);
+	query_split(query);
+	string course_info = find_info(course_code, category);
 	
 	if (course_info!="0"){
 		//If the course is found:
@@ -138,10 +149,10 @@ int main(){
 
 	//PHASE 4A
 	//have the query information ready
-	send_to_main = course_info;
+	strcpy(send_to_main, course_info.c_str());
 	//query information is sent back to the Main server using UDP
 	//7. GOTO: serverM.c with course_info
-	sendto(ee_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (struct sockaddr *) &main_addr,  sizeof(main_addr));
+	sendto(ee_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (struct sockaddr *) &main_addr, len);
 	//After sending the results to the main server: 
 	cout<<"The ServerEE finished sending the response to the Main Server.";
 	return 0;
