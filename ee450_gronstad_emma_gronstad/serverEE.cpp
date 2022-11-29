@@ -3,7 +3,7 @@ serverEE.c
 Each backend server should read the corresponding file and store the information in a certain data structure.
 
 */
-#include <eetring>
+#include <cstring>
 #include <iostream>
 #include <string.h>
 #include <bits/stdc++.h>
@@ -18,7 +18,6 @@ Each backend server should read the corresponding file and store the information
 #include <unistd.h>
 #include <errno.h> 
 #include <sys/wait.h>
-#include <eetring>
 #include <string>
 #include <fstream>
 #include <iterator>
