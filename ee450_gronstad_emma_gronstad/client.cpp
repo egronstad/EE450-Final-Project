@@ -104,7 +104,7 @@ int main(){
 				strcpy(send_to_main, login_cred.c_str());
 				cout<<send_to_main<<endl;
 				send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
-				cout<<"I sent a message :\)";
+				cout<<"I sent a message";
 				if (!send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0)){
 					cout<<"STINK!!";
 				}
