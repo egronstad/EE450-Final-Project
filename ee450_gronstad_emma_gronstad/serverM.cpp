@@ -186,7 +186,10 @@ char ee_buf[BUFSIZE];
 
 char msg[BUFSIZE];
 
-int read_len = 0;
+int client_buf_len;
+int c_buf_len;
+int cs_buf_len;
+int ee_buf_len;
 
 int main(){
 	//PHASE 2A
@@ -212,7 +215,7 @@ int main(){
 	//Upon sending an authentication request to serverC
 	cout<<"The main server sent an authentication request to serverC.";
 	
-	char event = recvfrom(main_UDP_sock, (char *)c_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_c_addr, &c_len); 
+	c_buf_len = recvfrom(main_UDP_sock, (char *)c_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_c_addr, &c_len); 
 	
 	//After receiving result of the authentication request from serverC:
 	cout<<"The main server received the result of the authentication request from ServerC using UDP over port 24267.";
@@ -262,7 +265,8 @@ int main(){
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
-		char course_info = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
+		cs_buf_len = recvfrom(main_UDP_sock, (char *)cs_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_cs_addr, &cs_len); 
+		char course_info = cs_buf;
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
@@ -277,7 +281,8 @@ int main(){
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
-		char course_info = recvfrom(main_UDP_sock, (char *)ee_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_ee_addr, &ee_len); 
+		ee_buf_len = recvfrom(main_UDP_sock, (char *)ee_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &server_ee_addr, &ee_len); 
+		char course_info = ee_buf;
 		//PHASE 4B
 		//when main server receives the result, print out an on-screen message
 		//After receiving result from EE or CS Department server i for query information:
