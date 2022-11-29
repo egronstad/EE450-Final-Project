@@ -126,7 +126,7 @@ void query_split(string query){
 int main_buf_len;
 
 int main(){
-	server_UDP()
+	server_UDP();
 	while(1){
 		//PHASE 3B
 		//after getting the query information, look through stored local information to obtain the corresponding course information.
