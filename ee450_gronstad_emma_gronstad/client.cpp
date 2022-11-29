@@ -110,9 +110,9 @@ int main(){
 				//1. GOTO: serverM.c with string login_cred & username
 				
 				login();
-				cout<<login_cred<<endl;
+				//cout<<login_cred<<endl;
 				strcpy(send_to_main, login_cred.c_str());
-				cout<<send_to_main<<endl;
+				//cout<<send_to_main<<endl;
 				send(client_TCP_sock,(char*)send_to_main,strlen(send_to_main),0);
 				
 				//Upon sending authentication request to Main Server:

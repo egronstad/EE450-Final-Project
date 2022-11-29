@@ -104,8 +104,8 @@ void client_UDP(){
 	//referenced https://www.geeksforgeeks.org/udp-server-client-implementation-c/
 	main_UDP_sock = socket(AF_INET, SOCK_STREAM, 0);
     if(main_UDP_sock < 0){
-        perror("Error establishing the server socket"); 
-        exit(1);
+        cout<<"Error establishing the server socket"<<endl; 
+        //exit(1);
     }
 
     memset(&server_c_addr, 0, sizeof(server_c_addr)); 
@@ -130,8 +130,8 @@ void client_UDP(){
 
     int bindStatus = bind(main_UDP_sock, (struct sockaddr*) &sendSockAddr, sizeof(sendSockAddr));
     if(bindStatus < 0){
-        perror("Error binding socket to local address"); 
-        exit(1);
+        cout<<"Error binding socket to local address"<<endl; 
+        //exit(1);
     }
 }
 
