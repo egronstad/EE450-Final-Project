@@ -34,7 +34,7 @@ string event = "";
 
 string cred_check(string login_cred){
 	//read file
-	string file;
+	string cred_file;
 	cred_file.open(CREDTXT.c_str());
 	string username;
 	string password;
@@ -53,18 +53,18 @@ string cred_check(string login_cred){
         }
     }
 
-    //need to test
     //username check
+    int j;
+    int l;
 	for (int i = 0; i <= cred_file.length()-username.length(); i++){
-        for (int j = 0; j < username.length(); j++)
+        for (j = 0; j < username.length(); j++)
             if (cred_file[i + j] != username[j])
                 break;
         if (j == username.length()){
-
         	//username & password check
 		    for (int k = 0; k <= cred_file.length()-login_cred.length(); k++){
-		        for (int l = 0; l < login_cred.length(); l++)
-		            if (s2[k + l] != s1[l])
+		        for (l = 0; l < login_cred.length(); l++)
+		            if (cred_file[k + l] != login_cred[l])
 		                break;
 		        if (l == login_cred.length())
 		            return "login";
@@ -72,7 +72,7 @@ string cred_check(string login_cred){
             return "pass error";
         }
     }
-    return "user error"
+    return "user error";
 }
 
 int c_UDP_sock;
@@ -114,12 +114,12 @@ void server_UDP(){
 int main(){
 	//PHASE 2A
 	//receive authentication request w encrypted form of username and password
-	char login = recvfrom(c_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (const struct sockaddr *) &main_addr, sizeof(main_addr));
+	char login = recvfrom(c_UDP_sock, (char *)main_buf, BUFSIZE,  MSG_WAITALL, (struct sockaddr *) &main_addr, sizeof(main_addr));
 	//Upon receiving the request from main server:
 	cout<<"The ServerC received an authentication request from the Main Server.";
 	//3. GOTO: serverM.c with string event and/or corresponding integer
 	send_to_main=cred_check(login);
-	sendto(c_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (struct sockaddr *) &main_addr,  sizeof(main_addr));
+	sendto(c_UDP_sock, (char *)send_to_main, strlen(send_to_main), MSG_CONFIRM, (const struct sockaddr *) &main_addr,  sizeof(main_addr));
 	//After sending the results to the main server:
 	cout<<"The ServerC finished sending the response to the Main Server.";
 	
