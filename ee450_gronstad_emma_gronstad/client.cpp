@@ -53,6 +53,7 @@ string query(){
 struct sockaddr_in servAddr;
 struct sockaddr_in my_addr;
 int client_TCP_sock;
+unsigned int client_port;
 
 void client_TCP(){
 	//heavily referenced https://github.com/bozkurthan/Simple-TCP-Server-Client-CPP-Example/blob/master/tcp-Server.cpp
@@ -70,8 +71,9 @@ void client_TCP(){
         exit(1);
     }
     bzero((char*)&my_addr, sizeof(my_addr));
-  	getsockname(client_TCP_sock, (struct sockaddr*) &my_addr, (socklen_t*)&sizeof(my_addr));
-    clientPort = ntohs(my_addr.sin_port);
+    socklen_t len = sizeof(my_addr);
+  	getsockname(client_TCP_sock, (struct sockaddr*) &my_addr, (socklen_t*)&len);
+    client_port = ntohs(my_addr.sin_port);
     exit(0);
 }
 
