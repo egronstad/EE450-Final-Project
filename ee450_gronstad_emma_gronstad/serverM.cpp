@@ -250,7 +250,7 @@ int main(){
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
-		sendto(main_UDP_sock, (char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr,  sizeof(server_cs_addr));
+		sendto(main_UDP_sock, send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr,  sizeof(server_cs_addr));
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
@@ -264,7 +264,7 @@ int main(){
 		//PHASE 3B
 		//send the query information to the backend department server via UDP connection
 		//6. GOTO: serverCS.c/serverEE.c with course_query
-		sendto(main_UDP_sock, (char *)send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr,  sizeof(server_cs_addr));
+		sendto(main_UDP_sock, send_to_cs, strlen(send_to_cs), MSG_CONFIRM, (const struct sockaddr *) &server_cs_addr,  sizeof(server_cs_addr));
 		//output an on-screen message upon sending the request to the backend server
 		//After querying EE or CS Department Server
 		cout<<"The main server sent a request to server"<<department<<".";
