@@ -68,25 +68,27 @@ void dont_steal_my_info(char info[]){
 struct sockaddr_in sendSockAddr;
 struct sockaddr_in my_addr;
 int server_TCP_sock;
+int newSd;
 
 void server_TCP(){
 	//heavily referenced https://github.com/bozkurthan/Simple-TCP-Server-Client-CPP-Example/blob/master/tcp-Server.cpp
-	bzero((char*)&sendSockAddr, 0,sizeof(sendSockAddr));
+	bzero((char*)&sendSockAddr,sizeof(sendSockAddr));
     sendSockAddr.sin_family = AF_INET;
-    sendSockAddr.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)*host->h_addr_list));
+    sendSockAddr.sin_addr.s_addr = htonl(INADDR_ANY);
     sendSockAddr.sin_port = htons(server_TCP_sock);
     server_TCP_sock = socket(AF_INET, SOCK_STREAM, 0);
     if(server_TCP_sock < 0){
         perror("Error establishing the server socket"); 
         exit(1);
     }
-    bindStatus = bind(server_TCP_sock, (struct sockaddr*) &sendSockAddr, sizeof(sendSockAddr));
+    int bindStatus = bind(server_TCP_sock, (struct sockaddr*) &sendSockAddr, sizeof(sendSockAddr));
     if(bindStatus < 0){
         cout << "Error binding socket to local address" << endl;
         exit(1);
     }
     listen(server_TCP_sock, 5);
-    newSockAddrSize = sizeof(newSockAddr);
+    sockaddr_in newSockAddr;
+    socklen_t newSockAddrSize = sizeof(newSockAddr);
     newSd = accept(server_TCP_sock, (sockaddr *)&newSockAddr, &newSockAddrSize);
     if(newSd < 0){
         cout << "Error accepting request from client!" << endl;
@@ -97,6 +99,10 @@ void server_TCP(){
 }
 
 int main_UDP_sock;
+struct sockaddr_in server_c_addr;
+struct sockaddr_in server_cs_addr;
+struct sockaddr_in server_ee_addr;
+struct sockaddr_in server_m_addr;
 
 void client_UDP(){
 	//referenced https://www.geeksforgeeks.org/udp-server-client-implementation-c/
@@ -150,7 +156,7 @@ string category;
 
 string find_code(string query){
 	//split
-	stringstream ss(login_cred);
+	stringstream ss(query);
     string word;
     int num=1;
     getline(ss, word, ',');
@@ -160,9 +166,9 @@ string find_code(string query){
 
 int dept_request;
 string department;
-char *send_to_c = "filler";
-char *send_to_cs = "filler";
-char *send_to_ee = "filler";
+char *send_to_c[BUFSIZE];
+char *send_to_cs[BUFSIZE];
+char *send_to_ee[BUFSIZE];
 
 
 int main(){
@@ -170,7 +176,7 @@ int main(){
 	//receive unencrypted information from client over TCP
 	server_TCP();
 	char info = recv(newSd, (char*)&client_buf, sizeof(client_buf), 0);
-	string hold=info;
+	string (BUFSIZE, info);
 	username=find_user(hold);
 	//After receiving the username and password from the client:
 	cout<<"The main server received the authentication for "<<username<<" using TCP over port 25267.";
