@@ -65,8 +65,8 @@ void server_UDP(){
 	cout<<"The ServerCS is up and running using UDP on port 22267.";
 }
 
-vector<string> cs_file;
-stringstream ss(cs_file);
+vector<string> cs_vec;
+stringstream ss(cs_vec);
 string word;
 
 void extract_dept_file(){
